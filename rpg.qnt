@@ -67,7 +67,11 @@ module rpg {
             | _ => 10
         }
         all {
-            ordered_players' = players_list.foldl([], (acc, p) => if (p == receiver) acc.append(change_hp(p, -damage)) else acc.append(p)),
+            val new_players = players_list.foldl([], (acc, p) => if (p == receiver) acc.append(change_hp(p, -damage)) else acc.append(p))
+            match receiver.player_class {
+                | Druid => ordered_players' = new_players.foldl([], (acc, p) => acc.append(if (p.hp <= 0) change_detransform(p) else p))
+                | _ => ordered_players' = new_players
+            }
         }
     }
 
@@ -87,9 +91,10 @@ module rpg {
 
     action attack_bear(attacker: Player, players_list: List[Player]): bool = all {
         attacker.player_class == Monster, 
-        val bears: List[Player] = players_list.foldl([], (l, p) => if (p.transformed) l.append(p) else l)
-        bears != [], 
-        // escolher algum bear => se hp ficar <= 0 detransform 
+        val bears_list: List[Player] = players_list.foldl([], (l, p) => if (p.transformed) l.append(p) else l)
+        val bears_set: Set[Player] = bears_list.indices().map(i => bears_list[i])
+        nondet bear = oneOf(bears_set)
+        deal_damage(attacker, bear, players_list), // -- VERIFICAR
     }
 
     action bear_transform(player: Player, players_list: List[Player]): bool = all {
@@ -137,14 +142,15 @@ module rpg {
         player.player_class != Monster and player.paralyzed,
     }
 
-    def illusion_time_out(): bool = all {
+    def illusion_time_out(player: Player): bool = all {
+        player.illusion_on == true,
         sheep_counter > 0,
         sheep_counter' = sheep_counter - 1,
     }
 
     def lose_modifiers(player: Player): List[Player] = {
         match player.player_class {
-            | Mage => ordered_players.foldl([], (acc, p) => acc.append(if (p.illusion_on and illusion_time_out) change_illusion(p) else p)) // nao sei se funciona
+            | Mage => ordered_players.foldl([], (acc, p) => acc.append(if (illusion_time_out(p)) change_illusion(p) else p)) // nao sei se funciona
             | Druid => ordered_players.foldl([], (acc, p) => acc.append(if (p.transformed) change_detransform(p) else p))
             | Monster => ordered_players.foldl([], (acc, p) => acc.append(if (p.blinded) change_blind(p) else p))
             | _ => ordered_players
