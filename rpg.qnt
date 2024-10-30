@@ -1,7 +1,7 @@
 module rpg {
     import basicSpells.* from "./spells/basicSpells"
 
-    type Class = Mage | Druid | Hunter | Monster | Sheep 
+    type Class = Mage | Druid | Hunter | Monster 
     type Player = {
         player_class: Class, 
         playable: bool, 
@@ -16,20 +16,24 @@ module rpg {
     val sheep_counter: int = 0
     val turn_number: int = 0 
     val current_player_index: int = 0
-    val ordered_players : List[Player]
+    val ordered_players: List[Player] = []
 
     type Modifier = Ilusion | Blindness | Transform
 
     pure def change_hp(receiver: Player, change: int): Player = {
         { ...receiver, hp: receiver.hp + change}
     }
+    
     pure def change_paralize(receiver: Player): Player = {
         { ...receiver, paralized: true}
     }
+
     pure def change_blind(receiver: Player): Player = {
-        { ...receiver, blind: true}
+        { ...receiver, blinded: true}
     }
+
     // transform (bomba)
+
     pure def change_illusion(caster: Player): Player = {
         { ...caster, illusion_on: true }
     } 
@@ -38,22 +42,34 @@ module rpg {
         p1.initiative < p2.initiative 
     }
     
-    action init = all {
-        val player_1 = { player_class: Mage, hp: 20, initiative: oneOf(1.to(20)), paralized: false, blinded: false, backup_hp: 0, transformed: false, illusion_on: false}
-        val player_2 = { player_class: Hunter, hp: 20, initiative: oneOf(1.to(20)), paralized: false, blinded: false, backup_hp: 0, transformed: false, illusion_on: false}
-        val player_3 = { player_class: Druid, hp: 20, initiative: oneOf(1.to(20)), paralized: false, blinded: false, backup_hp: 0, transformed: false, illusion_on: false}
-        val player_4 = { player_class: Monster, hp: 100, initiative: oneOf(1.to(20)), paralized: false, blinded: false, backup_hp: 0, transformed: false, illusion_on: false}
+    action init = {
+        pure val d20 = 1.to(20) 
+        nondet player_1_initiative = d20.oneOf()
+        nondet player_2_initiative = d20.oneOf()
+        nondet player_3_initiative = d20.oneOf()
+        nondet player_4_initiative = d20.oneOf()
 
+        val player_1 = { player_class: Mage, hp: 20, initiative: player_1_initiative, paralized: false, blinded: false, backup_hp: 0, transformed: false, illusion_on: false}
+        val player_2 = { player_class: Hunter, hp: 20, initiative: player_2_initiative, paralized: false, blinded: false, backup_hp: 0, transformed: false, illusion_on: false}
+        val player_3 = { player_class: Druid, hp: 20, initiative: player_3_initiative, paralized: false, blinded: false, backup_hp: 0, transformed: false, illusion_on: false}
+        val player_4 = { player_class: Monster, hp: 100, initiative: player_4_initiative, paralized: false, blinded: false, backup_hp: 0, transformed: false, illusion_on: false}
+        
         // lista global com a ordem que os caras jogam 
-        sortList(ordered_players, ordering), 
-        turn_number' = 0, 
-        current_player_index' = 0 
+        ordered_players.append(player_1)
+        sortList(ordered_players, ordering)
+
+        all {
+            ordered_players' = ordered_players,
+            turn_number' = 0,
+            current_player_index' = 0,
+            sheep_counter' = 0,
+        }
     }
 
     pure def can_attack(attacker: Player, receiver: Player): bool = all {
         attacker.hp > 0, 
         attacker.paralized == false, 
-        attacker.blind == false, 
+        attacker.blinded == false, 
         receiver.hp > 0, 
         if (attacker.player_class == Monster) {
             receiver.player_class != Monster
@@ -74,7 +90,7 @@ module rpg {
     action attack_player(attacker: Player, receiver: Player): bool = all {
         sheep_counter == 0, 
         val bears: List[Player] = ordered_players.foldl([], (l, p) => if (p.transformed) l.append(p) else l)
-        bears == [], // verificando se nao tem bears (da certo?)
+        bears.length() != 0, // verificando se nao tem bears (da certo?)
         deal_damage(attacker, receiver),
     }
     
@@ -93,7 +109,8 @@ module rpg {
 
     action step = all {
         val current_player = ordered_players[current_player_index]
-        val current_enemy = oneOf(ordered_players.filter(possible_enemy => can_attack(current_player, possible_enemy)))
+        val enemies = ordered_players.filter(possible_enemy => can_attack(current_player, possible_enemy))
+        nondet current_enemy = oneOf(enemies)
         any {
             attack_sheep(current_player),
             attack_bear(current_player),
