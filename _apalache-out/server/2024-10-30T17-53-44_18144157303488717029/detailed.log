@@ -1,0 +1,74 @@
+2024-10-30T17:53:44,749 [main] INFO  a.f.a.t.Tool$ - # APALACHE version: 0.44.11 | build: 5dee24e
+2024-10-30T17:53:44,754 [main] INFO  a.f.a.t.t.o.ServerCmd - Starting server on port 8822...
+2024-10-30T17:53:48,290 [zio-default-async-5] INFO  a.f.a.i.p.PassChainExecutor$ - PASS #0: SanyParser
+2024-10-30T17:53:48,927 [zio-default-async-5] DEBUG a.f.a.i.p.PassChainExecutor$ - PASS #0: SanyParser [OK]
+2024-10-30T17:53:48,928 [zio-default-async-5] INFO  a.f.a.i.p.PassChainExecutor$ - PASS #1: TypeCheckerSnowcat
+2024-10-30T17:53:48,928 [zio-default-async-5] INFO  a.f.a.t.p.t.EtcTypeCheckerPassImpl -  > Running Snowcat .::.
+2024-10-30T17:53:50,334 [zio-default-async-5] INFO  a.f.a.t.p.t.EtcTypeCheckerPassImpl -  > Your types are purrfect!
+2024-10-30T17:53:50,334 [zio-default-async-5] INFO  a.f.a.t.p.t.EtcTypeCheckerPassImpl -  > All expressions are typed
+2024-10-30T17:53:50,334 [zio-default-async-5] DEBUG a.f.a.i.p.PassChainExecutor$ - PASS #1: TypeCheckerSnowcat [OK]
+2024-10-30T17:53:50,335 [zio-default-async-5] INFO  a.f.a.i.p.PassChainExecutor$ - PASS #2: ConfigurationPass
+2024-10-30T17:53:50,343 [zio-default-async-5] INFO  a.f.a.t.p.p.ConfigurationPassImpl -   > Set the initialization predicate to q::init
+2024-10-30T17:53:50,344 [zio-default-async-5] INFO  a.f.a.t.p.p.ConfigurationPassImpl -   > Set the transition predicate to q::step
+2024-10-30T17:53:50,345 [zio-default-async-5] INFO  a.f.a.t.p.p.ConfigurationPassImpl -   > Set an invariant to q::inv
+2024-10-30T17:53:50,349 [zio-default-async-5] DEBUG a.f.a.i.p.PassChainExecutor$ - PASS #2: ConfigurationPass [OK]
+2024-10-30T17:53:50,349 [zio-default-async-5] INFO  a.f.a.i.p.PassChainExecutor$ - PASS #3: DesugarerPass
+2024-10-30T17:53:50,349 [zio-default-async-5] INFO  a.f.a.t.p.p.DesugarerPassImpl -   > Desugaring...
+2024-10-30T17:53:50,359 [zio-default-async-5] DEBUG a.f.a.i.p.PassChainExecutor$ - PASS #3: DesugarerPass [OK]
+2024-10-30T17:53:50,359 [zio-default-async-5] INFO  a.f.a.i.p.PassChainExecutor$ - PASS #4: InlinePass
+2024-10-30T17:53:50,360 [zio-default-async-5] INFO  a.f.a.t.p.p.InlinePassImpl - Leaving only relevant operators: CInitPrimed, q::init, q::initPrimed, q::inv, q::step
+2024-10-30T17:53:50,552 [zio-default-async-5] DEBUG a.f.a.i.p.PassChainExecutor$ - PASS #4: InlinePass [OK]
+2024-10-30T17:53:50,552 [zio-default-async-5] INFO  a.f.a.i.p.PassChainExecutor$ - PASS #5: TemporalPass
+2024-10-30T17:53:50,552 [zio-default-async-5] INFO  a.f.a.t.p.p.TemporalPassImpl -   > Rewriting temporal operators...
+2024-10-30T17:53:50,552 [zio-default-async-5] INFO  a.f.a.t.p.p.TemporalPassImpl -   > No temporal property specified, nothing to encode
+2024-10-30T17:53:50,552 [zio-default-async-5] DEBUG a.f.a.i.p.PassChainExecutor$ - PASS #5: TemporalPass [OK]
+2024-10-30T17:53:50,552 [zio-default-async-5] INFO  a.f.a.i.p.PassChainExecutor$ - PASS #6: InlinePass
+2024-10-30T17:53:50,552 [zio-default-async-5] INFO  a.f.a.t.p.p.InlinePassImpl - Leaving only relevant operators: CInitPrimed, q::init, q::initPrimed, q::inv, q::step
+2024-10-30T17:53:50,566 [zio-default-async-5] DEBUG a.f.a.i.p.PassChainExecutor$ - PASS #6: InlinePass [OK]
+2024-10-30T17:53:50,566 [zio-default-async-5] INFO  a.f.a.i.p.PassChainExecutor$ - PASS #7: PrimingPass
+2024-10-30T17:53:50,569 [zio-default-async-5] INFO  a.f.a.t.p.a.PrimingPassImpl -   > Introducing q::initPrimed for q::init'
+2024-10-30T17:53:50,570 [zio-default-async-5] DEBUG a.f.a.i.p.PassChainExecutor$ - PASS #7: PrimingPass [OK]
+2024-10-30T17:53:50,570 [zio-default-async-5] INFO  a.f.a.i.p.PassChainExecutor$ - PASS #8: VCGen
+2024-10-30T17:53:50,571 [zio-default-async-5] INFO  a.f.a.t.b.p.VCGenPassImpl -   > Producing verification conditions from the invariant q::inv
+2024-10-30T17:53:50,573 [zio-default-async-5] INFO  a.f.a.t.b.VCGenerator -   > VCGen produced 1 verification condition(s)
+2024-10-30T17:53:50,575 [zio-default-async-5] DEBUG a.f.a.i.p.PassChainExecutor$ - PASS #8: VCGen [OK]
+2024-10-30T17:53:50,575 [zio-default-async-5] INFO  a.f.a.i.p.PassChainExecutor$ - PASS #9: PreprocessingPass
+2024-10-30T17:53:50,575 [zio-default-async-5] INFO  a.f.a.t.p.p.PreproPassImpl -   > Before preprocessing: unique renaming
+2024-10-30T17:53:50,578 [zio-default-async-5] INFO  a.f.a.t.p.p.PreproPassImpl -  > Applying standard transformations:
+2024-10-30T17:53:50,579 [zio-default-async-5] INFO  a.f.a.t.p.p.PreproPassImpl -   > PrimePropagation
+2024-10-30T17:53:50,581 [zio-default-async-5] INFO  a.f.a.t.p.p.PreproPassImpl -   > Desugarer
+2024-10-30T17:53:50,591 [zio-default-async-5] INFO  a.f.a.t.p.p.PreproPassImpl -   > UniqueRenamer
+2024-10-30T17:53:50,598 [zio-default-async-5] INFO  a.f.a.t.p.p.PreproPassImpl -   > Normalizer
+2024-10-30T17:53:50,607 [zio-default-async-5] INFO  a.f.a.t.p.p.PreproPassImpl -   > Keramelizer
+2024-10-30T17:53:50,625 [zio-default-async-5] INFO  a.f.a.t.p.p.PreproPassImpl -   > After preprocessing: UniqueRenamer
+2024-10-30T17:53:50,641 [zio-default-async-5] DEBUG a.f.a.i.p.PassChainExecutor$ - PASS #9: PreprocessingPass [OK]
+2024-10-30T17:53:50,641 [zio-default-async-5] INFO  a.f.a.i.p.PassChainExecutor$ - PASS #10: TransitionFinderPass
+2024-10-30T17:53:50,704 [zio-default-async-5] INFO  a.f.a.t.p.a.TransitionPassImpl -   > Found 1 initializing transitions
+2024-10-30T17:53:50,719 [zio-default-async-5] DEBUG a.f.a.i.p.PassChainExecutor$ - Adapted exception intercepted: 
+at.forsyte.apalache.tla.assignments.AssignmentException: No assignments found for: number_of_players
+	at at.forsyte.apalache.tla.assignments.SmtFreeSymbolicTransitionExtractor.getStrategy(SmtFreeSymbolicTransitionExtractor.scala:169)
+	at at.forsyte.apalache.tla.assignments.SmtFreeSymbolicTransitionExtractor.apply(SmtFreeSymbolicTransitionExtractor.scala:187)
+	at at.forsyte.apalache.tla.passes.assignments.TransitionPassImpl.extractTransitions$1(TransitionPassImpl.scala:41)
+	at at.forsyte.apalache.tla.passes.assignments.TransitionPassImpl.execute(TransitionPassImpl.scala:55)
+	at at.forsyte.apalache.infra.passes.PassChainExecutor$.exec(PassChainExecutor.scala:64)
+	at at.forsyte.apalache.infra.passes.PassChainExecutor$.$anonfun$runPassOnModule$3(PassChainExecutor.scala:53)
+	at scala.util.Either.flatMap(Either.scala:360)
+	at at.forsyte.apalache.infra.passes.PassChainExecutor$.$anonfun$runPassOnModule$1(PassChainExecutor.scala:51)
+	at scala.collection.LinearSeqOps.foldLeft(LinearSeq.scala:183)
+	at scala.collection.LinearSeqOps.foldLeft$(LinearSeq.scala:179)
+	at scala.collection.immutable.List.foldLeft(List.scala:79)
+	at at.forsyte.apalache.infra.passes.PassChainExecutor$.runOnPasses(PassChainExecutor.scala:44)
+	at at.forsyte.apalache.infra.passes.PassChainExecutor$.run(PassChainExecutor.scala:34)
+	at at.forsyte.apalache.shai.v1.CmdExecutorService.$anonfun$executeCmd$6(CmdExecutorService.scala:93)
+	at scala.util.Either.flatMap(Either.scala:360)
+	at at.forsyte.apalache.shai.v1.CmdExecutorService.$anonfun$executeCmd$2(CmdExecutorService.scala:81)
+	at scala.util.Either.flatMap(Either.scala:360)
+	at at.forsyte.apalache.shai.v1.CmdExecutorService.executeCmd(CmdExecutorService.scala:77)
+	at at.forsyte.apalache.shai.v1.CmdExecutorService.$anonfun$run$1(CmdExecutorService.scala:47)
+	at zio.internal.FiberContext.evaluateNow(FiberContext.scala:355)
+	at zio.internal.FiberContext.$anonfun$evaluateLater$1(FiberContext.scala:785)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
+	at java.base/java.lang.Thread.run(Thread.java:1570)
+2024-10-30T17:53:50,720 [zio-default-async-5] INFO  a.f.a.t.b.c.CheckerExceptionAdapter - To understand the error, read the manual:
+2024-10-30T17:53:50,720 [zio-default-async-5] INFO  a.f.a.t.b.c.CheckerExceptionAdapter -   [https://apalache.informal.systems/docs/apalache/principles/assignments.html]
