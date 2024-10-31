@@ -15,7 +15,7 @@ module game_strategy {
     var current_player_index: int 
     var players_list: List[Player] 
     var to_print: int 
-    val number_of_players: int = 4 
+    val number_of_players: int = 5
 
     type Magic_Effect = Paralyze | Blind | Transform | Illusion | Deparalyze
     type Move = 
@@ -222,13 +222,15 @@ module game_strategy {
         nondet player_2_initiative = oneOf(1.to(20))
         nondet player_3_initiative = oneOf(1.to(20))
         nondet player_4_initiative = oneOf(1.to(20))
+        nondet player_5_initiative = oneOf(1.to(20)) // new monster
 
         val player_1 = { player_class: Mage, hp: 20, initiative: player_1_initiative, paralyzed: false, blinded: false, backup_hp: 0, transformed: false, illusion_on: false}
         val player_2 = { player_class: Hunter, hp: 20, initiative: player_2_initiative, paralyzed: false, blinded: false, backup_hp: 0, transformed: false, illusion_on: false}
         val player_3 = { player_class: Druid, hp: 20, initiative: player_3_initiative, paralyzed: false, blinded: false, backup_hp: 0, transformed: false, illusion_on: false,}
         val player_4 = { player_class: Monster, hp: 100, initiative: player_4_initiative, paralyzed: false, blinded: false, backup_hp: 0, transformed: false, illusion_on: false}
+        val player_5 = { player_class: Monster, hp: 100, initiative: player_5_initiative, paralyzed: false, blinded: false, backup_hp: 0, transformed: false, illusion_on: false}
         
-        players_list' = sortList(List(player_1, player_2, player_3, player_4), ordering), 
+        players_list' = sortList(List(player_1, player_2, player_3, player_4, player_5), ordering), 
         turn_number' = 0,
         current_player_index' = 0,
         last_move' = None, 
