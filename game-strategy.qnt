@@ -14,7 +14,6 @@ module game_strategy {
     var turn_number: int 
     var current_player_index: int 
     var players_list: List[Player] 
-    var to_print: int 
     val number_of_players: int = 4 
 
     type Magic_Effect = Paralyze | Blind | Transform | Illusion | Deparalyze
@@ -232,7 +231,6 @@ module game_strategy {
         turn_number' = 0,
         current_player_index' = 0,
         last_move' = None, 
-        to_print' = 0, 
     }
 
     def can_act(player_index: int, new_players_list: List[Player]): bool = {
@@ -282,7 +280,6 @@ module game_strategy {
             }
         }, 
         },
-        to_print' = players_list.foldl(0, (sum, p) => if (p.paralyzed) sum + 1 else sum), 
         turn_number' = turn_number + 1, 
         current_player_index' = (current_player_index + 1) % number_of_players
     }
